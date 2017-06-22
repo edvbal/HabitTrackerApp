@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         values.put(HabitEntry.COLUMN_START_DATE, "21/06/2017");
         values.put(HabitEntry.COLUMN_DIFFICULTY, HabitEntry.DIFFICULTY_HARD);
         dbHelper.insertRow(values);
-        Cursor cursor = dbHelper.readRow(5);
+        Cursor cursor = dbHelper.readRows(HabitEntry.DIFFICULTY_HARD);
         int nameIndex = cursor.getColumnIndex(HabitEntry.COLUMN_NAME);
         String name = cursor.getString(nameIndex);
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();

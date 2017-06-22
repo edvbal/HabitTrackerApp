@@ -37,7 +37,7 @@ public class HabitDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        String SQL_DELETE_ENTRIES = "DELETE TABLE IF EXISTS " + HabitContract.HabitEntry.HABIT_TABLE_NAME;
+        String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + HabitContract.HabitEntry.HABIT_TABLE_NAME;
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
     }
@@ -47,13 +47,14 @@ public class HabitDbHelper extends SQLiteOpenHelper {
         db.insert(HabitContract.HabitEntry.HABIT_TABLE_NAME, null, contentValues);
     }
 
-    public Cursor readRow(int id) {
+    public Cursor readRows(int difficulty) {
         Cursor cursor;
-        String selection = HabitEntry.COLUMN_ID + " = ?";
-        String[] selectionArgs = new String[]{Integer.toString(id)};
+        String selection = HabitEntry.COLUMN_DIFFICULTY + " = ?";
+        String[] selectionArgs = new String[]{Integer.toString(difficulty)};
         db = getReadableDatabase();
         cursor = db.query(true, HabitContract.HabitEntry.HABIT_TABLE_NAME, null, selection,
                 selectionArgs, null, null, null, null);
+        cursor.moveToFirst();
         return cursor;
     }
 
